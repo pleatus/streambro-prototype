@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang ="en">
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>spinner prototype</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<style>
+		body {
+			text-align: center;
+			background-color: #090909;
+			color: #eeeeee;
+		}
+		div.circle{
+			width: 252px;
+			height: 252px;
+			border-radius: 50%;
+			background-color: #545454;
+			margin: 45px auto 0px auto;
+			z-index:7000;
+		}
+		div.smCircle {
+			width: 54px;
+			height: 54px;
+			border-radius: 50%;
+			background-color: yellow;
+			z-index:70020;
+			position: relative;
+			top:-153px;
+			margin: 0px auto auto auto;
+		}
+		input#divisions {
+			display:block;
+			width:100px;
+			height: 60px;
+			font-size:1.3em;
+			padding: 3px;
+			margin: 0px auto 0px auto;
+		}
+		button#getDivNum,button#startSpin,button#endSpin {
+			width:100px;
+			height: 60px;
+			margin: 9px auto 0px auto;
+			font-size:1.3em;
+			padding: 3px;
+		}
+		div.padBottom {
+			height:300px;
+		}
+		div.placer {
+			position: absolute;
+			margin: 81px auto 0px auto;
+			top:90px;
+			width: 126px;
+			border-bottom: 1px solid magenta;
+			display: inline;
+			color:#fff;
+		}
+		div.pointer {
+			width: 3px;
+			height: 36px;
+			top:-27px;
+			background-color: cyan;
+			display: inline;
+			overflow:none;
+			position: absolute;
+			z-index:80000;
+		}
+		div.selector {
+			width: 1px;
+			height: 1px;
+			top:-1px;
+			background-color: magenta;
+			display: inline;
+			overflow:none;
+			position: absolute;
+			z-index:80001;
+		}
+	</style>
+</head>
+<body>
+
+<div class="circle" id="spinner"></div>
+<button id="getDivNum">Divide</button>
+<button id="startSpin">Spin</button><button id="endSpin">End</button><br>
+<label for="divisions">Set divisions (2-16)
+<input name="divisions" type="number" min="2" max="16" id="divisions" value="7"></label>
+<h5>spinner prototype</h5>
+
+
+	<script>
+		$(document).ready (function() {
+			//following line removes all images, looks bad on obs if nayone is hosting on top of you
+			$("img").css("display", "none");
+			$('#endSpin').prop('disabled',false);
+				$('#getDivNum').click(function() {
+					spinDeg = 0;
+					//$(this).prop('disabled',true);
+					var divs = $('#divisions').val()
+					if (divs < 2 || divs > 16) {
+						alert('Please enter a number between 2 and 16');
+						$(this).prop('disabled',false);
+					}
+					else {
+						clearSpinOps();
+						calcDivs(divs); 
+					}
+				});
+				$('#startSpin').click(function() {
+					$('#getDivNum').prop('disabled',true);
+					$(this).prop('disabled',true);
+					$('#endSpin').prop('disabled',false);
+					$('.smCircle').css('transform','rotate(0deg)');
+					spinControl();
+				});
+				$('#endSpin').click(function() {
+					clearInterval(spinInterval);
+					$(this).prop('disabled',true);
+					var winner = Math.ceil(Math.random() * globalDivs);
+					endSpin(spinDeg,winner);
+				});
+		});
+		
+		function calcDivs(divs) {
+			var divisions = divs;
+			globalDivs = divisions;
+			var fontSiz = retFS(divisions);
+			var angleForEach = 360 / divisions;
+			//var revAngle = angleForEach * (-1);
+			//console.log(angleForEach + ' : ' + revAngle);
+			var addedAngle = angleForEach;
+			for (var i = 0; i < divisions; i++) {
+				var placerCon = '<div class="placer" id="pl' + i + '">Option ' + (i + 1) + '</div>';
+				$('#spinner').append(placerCon);
+					$('#pl' + i + '').css({
+						'z-index':'700' + (i + 1) + '',
+						'font-size':'' + fontSiz + 'em',
+						'transform':'rotate(' + addedAngle + 'deg)',
+						'transform-origin':'0% 0%'
+						});
+				addedAngle = addedAngle + angleForEach;
+			}
+			$('#spinner').after('<div class="smCircle"></div>');
+			$('.smCircle').append('<div class="pointer"></div>');
+			$('.pointer').append('<div class="selector"></div>');
+		}
+		
+		function clearSpinOps() {
+			$('#spinner').empty();
+			$('.smCircle').remove();
+		}
+		
+		function spinControl() {
+			spinDeg = 36;
+			var spinRate = 100;
+			//$('.circle').css('transform-origin','50% 50%');
+			//$('.placer .smCircle').css('right','270px');
+			spinInterval = setInterval(function() {
+				$('.smCircle').css('transform','rotate(' + spinDeg + 'deg)');
+				spinDeg = spinDeg + 36;
+				if(spinDeg >= 360) {
+					spinDeg = 0;
+				}
+			},spinRate);
+		}
+		function endSpin(spinD,winner) {
+			console.log('winner: ' + winner);
+			var spinDegr = spinD;
+			var spinRate = 100;
+			var calcWAr = ((360 / globalDivs) * winner) + 90;
+			if (calcWAr > 360) {
+				calcWAr = calcWAr - 360;
+			}
+			calcWAr = calcWAr - 1;
+			//var winnerAr = $('#pl' + (winner - 1) + '').css('transform');
+			//console.log('calcWAr = ' + calcWAr);
+			spinInterval = setInterval(function() {
+				spinDegr = spinDegr + 13;
+				if(spinDegr >= calcWAr) {
+					//console.log('diff btwn spdeg and war: ' + (spinDeg - calcWAr));
+					if ((spinDegr - calcWAr) <= 10 || (spinDegr - calcWAr) <= 19) {
+						//console.log(spinDegr + ' spindeg = calcWAr ' + calcWAr);
+						spinDegr = calcWAr;
+						checkSpinFin(spinDegr,calcWAr);
+						$('.smCircle').animate({transform:'rotate(' + spinDegr + 'deg)'},"slow");
+					}
+				
+				}
+				if(spinDegr >= 360) {
+					spinDegr = 0;
+				}
+				$('.smCircle').css('transform','rotate(' + spinDegr + 'deg)');
+			},spinRate);
+		}
+		function checkSpinFin(x,y) {
+			if(x == y) {
+				//console.log('spininterval cleared from checkspinfin. x: ' + x + 'y: ' + y);
+				setTimeout(function () {clearInterval(spinInterval);$('#startSpin').prop('disabled',false);$('#getDivNum').prop('disabled',false);},100);
+			}
+		}
+		function retFS(x) {
+			if (x >= 12) {
+				return .8;
+			}
+			else if (x <= 6) {
+				return 1.2;
+			}
+			else {
+				return 1;
+			}
+		}
+	</script>
+</body>
+</html>

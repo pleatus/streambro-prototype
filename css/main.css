@@ -1,0 +1,117 @@
+		body {
+			font-family: 'Play', sans-serif;
+			color: #eeeeee;
+			background-color: #4B0082;
+			overflow-x: hidden;
+		}
+		#header {
+			padding-left:18px;
+			background-color: rgba(9,9,9,0.5);
+		}
+		button {
+			height : 90px;
+			width: 117px;
+			border-radius: .3em;
+		}
+		#smAppLabel, #toolNav {
+			background-color:#191919;
+		}
+		#smAppLabel {
+			margin-top: 0px;
+			text-align:center;
+		}
+		ul.appListSm {
+			list-style-type:none;
+			width: 81%;
+			margin-left:auto;
+			margin-right:auto;
+			padding: 3px 3px 3px 3px;
+			background-color: #4B0090;
+		}
+		ul.appListSm>a>li {
+			background-color: rgba(0,255,255,0.8);
+			border-radius: 0.8em;
+			margin-top: 3px;
+			display: block;
+			position:relative;
+			padding-left:6.3px;
+		}
+		ul.appListSm>a>li:hover {
+			color: yellow;
+			border: 1px solid yellow;
+			margin-top: 2px;
+		}
+		div#toolNav {
+			padding: 18px 27px 0px 27px;
+		}
+		div#toolNav, div#activeTool {
+			/*border: 2px dotted lightgreen;*/
+			margin-left:auto;
+			margin-right:auto;
+		}
+		 div#activeTool {
+			background-color: rgba(9,9,9,0.4);
+			padding-left: 0px;
+			padding-right: 0px;
+		 }
+		 div.localAppList, div.intAppList {
+			 padding: 3px 0px 0px 3px;
+			 background-color: rgba(255,255,255,0.3);
+			 border-bottom: 1px dashed yellow;
+		 }
+		ul.appListLg {
+			background-color: #4B0090;
+			list-style-type: none; 
+		}
+		div#toolNav>ul>li>button {
+			background-color: rgba(0,255,255,0.8);
+			margin: 3.6px 0px 3.6px 0px;
+			border: 2px solid rgba(255,0,255,0.4);
+			color: rgba(255,255,0,1);
+			font-size: 1.3em;
+			width: 80%;
+			font-style: italic;
+			text-shadow: 2px 5px 5px rgba(255,0,255,0.4);
+		}
+		div#toolNav>ul>li>button:hover {
+			background-color: rgba(0,255,255,1);
+			border: 2px solid rgba(255,255,0,1);
+			color: rgba(255,255,0,1);
+			font-style: normal;
+			text-shadow: 3px 6px 6px rgba(255,0,255,0.6);
+		}
+		/*div#toolNav>ul>li>button:active {
+			background-color: rgba(255,255,0,1);
+			border: 2px solid rgba(255,0,255,1);
+			color: rgba(0,255,255,1);
+			font-style: oblique;
+			text-shadow: 3px 6px 6px rgba(255,255,0,0.6);
+		}*/
+		/*div#activeTool {
+			width: 72%;
+		}*/
+		iframe#toolHolder {
+			width: 100%;
+			height:100%;
+			min-height: 630px;
+			margin-right:auto;
+			margin-left:auto;
+			border: 0px;
+		}
+		#footer {
+			background-color:rgba(9,9,9,0.6);
+			text-align:center;
+			height: 126px;
+		}
+		#footer>div>p {
+			position:relative;
+			top: 36px;
+		}
+		#viewCheck {
+			float:left;
+		}
+		@media only screen and (max-width: 800px){
+			#viewCheck {
+				float:none;
+			}
+		}

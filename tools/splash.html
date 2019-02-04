@@ -1,0 +1,49 @@
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../fonts/apple.css">
+	<link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+	<style>
+	body {
+		color:#eeeeee;
+		font-family: 'Play',sans-serif;
+	}
+	h1,p {
+		padding-left:18px;
+	}
+	p {
+		font-size: 1.3em;
+		max-width: 500px;
+	}
+	h1>span#dArrow {
+		color: rgba(255,255,0,0.8);
+		font-size: 1.44em;
+	}
+	.yellow {
+		font-size: .6em;
+		color: yellow;
+	}
+	.system {
+		font-family: 'apple_regular';
+		font-size:.6em;
+	}
+	p>.system {
+		font-size:.4em;
+	}
+	</style>
+</head>
+<body>
+<h1 ><span id="dArrow">⬅️</span><span class="system">Select a Tool</span></h1>
+<p>Each tool interface inculdes a link <span class="yellow system">[higlighted in yellow]</span> at the bottom to be used as a Browser Source in Broadcaster software like OBS.</p>
+<p>To reload a tool at any time click or tap the tool's button from the menu.</p>
+<p>Click or tap on chillbrobagg1ns at the top to get back to this page at any time.</p>
+<p><sub class="yellow">* - denotes a tool in early development, may be buggy, or not include all features (like a display/customization options)</span></p>  
+<script>
+$(document).ready(function() {
+	if ($('body').width() < 400) {
+		$("#dArrow").text('⬆️');
+	}
+});
+</script>
+</body>
+</html>
